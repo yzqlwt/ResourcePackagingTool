@@ -1,0 +1,19 @@
+{
+  "Version": "v0.1.7",
+  "Type": 0,
+  "AccessRight": 0,
+  "DownloadUrl": null,
+  "InstallPath": "Assets/QFramework/Framework/2.ResKit/",
+  "DocUrl": "http://liangxiegame.com",
+  "Readme": {
+    "version": "v0.1.7",
+    "content": "fix build ab's error",
+    "author": "liangxie",
+    "date": "2019 年 08 月 29 日 13:27",
+    "VersionNumber": 107
+  },
+  "Id": null,
+  "Name": "2.ResKit",
+  "VersionNumber": 107,
+  "FileName": "2.ResKit_v0.1.7.unitypackage"
+}
