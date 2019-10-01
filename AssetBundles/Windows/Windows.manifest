@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 408955924
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: uiactivitypanel_prefab
+      Dependencies: {}
+    Info_1:
+      Name: uiaddactivitypanel_prefab
+      Dependencies: {}
+    Info_2:
+      Name: uiresourcepanel_prefab
+      Dependencies: {}
+    Info_3:
+      Name: uipropertiespanel_prefab
+      Dependencies: {}

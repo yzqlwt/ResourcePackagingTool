@@ -3,3 +3,6 @@ Library/
 Logs/
 Package/
 .vs/
+obj/
+Assets/StreamingAssets/AssetBundles/
+Temp/

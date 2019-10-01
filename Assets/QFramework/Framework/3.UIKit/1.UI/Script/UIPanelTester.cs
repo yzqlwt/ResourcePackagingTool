@@ -52,6 +52,8 @@ namespace QFramework
         /// </summary>
         public string PanelName;
 
+        public string PanelName2;
+
         /// <summary>
         /// 层级名字
         /// </summary>
@@ -67,10 +69,11 @@ namespace QFramework
         private IEnumerator Start()
         {
             yield return new WaitForSeconds(0.2f);
-			
+
+            UIMgr.OpenPanel(PanelName2, Level);
             UIMgr.OpenPanel(PanelName, Level);
 
-            mOtherPanels.ForEach(panelTesterInfo => { UIMgr.OpenPanel(panelTesterInfo.PanelName, panelTesterInfo.Level); });
+            //mOtherPanels.ForEach(panelTesterInfo => { UIMgr.OpenPanel(panelTesterInfo.PanelName, panelTesterInfo.Level); });
         }
     }
 }

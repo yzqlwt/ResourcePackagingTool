@@ -9,7 +9,7 @@ using System.IO;
 using QuickTools;
 using QF.Master;
 
-public class FileDrag
+public class FilePathInfo
 {
     public string FilePath;
     public string Extension;
@@ -43,7 +43,7 @@ public class FileDragAndDrop : MonoBehaviour
             var extension = Path.GetExtension(path);
             var fileName = Path.GetFileName(path);
             var md5 = Utils.GetMD5HashFromFile(path);
-            TypeEventSystem.Send(new FileDrag()
+            TypeEventSystem.Send(new FilePathInfo()
             {
                 FilePath = path,
                 Extension = extension,

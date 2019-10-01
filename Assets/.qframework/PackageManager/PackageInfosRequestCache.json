@@ -914,6 +914,13 @@
       "readme": {
         "items": [
           {
+            "version": "v0.1.16",
+            "content": "fix 2018.2 compile error",
+            "author": "liangxie",
+            "date": "2019 年 09 月 26 日 17:43",
+            "VersionNumber": 116
+          },
+          {
             "version": "v0.1.15",
             "content": "修复 SerializeHelper 支持 StreammingAssets 目录",
             "author": "liangxie",
@@ -1021,6 +1028,25 @@
         ]
       },
       "PackageVersions": [
+        {
+          "Version": "v0.1.16",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/Frameworkv0_1_16_8fd584a7_bff2_4fe8_862d_7686f913e19c.unitypackage",
+          "InstallPath": "Assets/QFramework/Framework",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.1.16",
+            "content": "fix 2018.2 compile error",
+            "author": "liangxie",
+            "date": "2019 年 09 月 26 日 17:43",
+            "VersionNumber": 116
+          },
+          "Id": "f2ba9d08-c7db-406c-9e47-a77698149c4f",
+          "Name": "Framework",
+          "VersionNumber": 116,
+          "FileName": "Framework_v0.1.16.unitypackage"
+        },
         {
           "Version": "v0.1.15",
           "Type": 0,
@@ -1307,13 +1333,13 @@
           "FileName": "_v0.1.1.unitypackage"
         }
       ],
-      "Version": "v0.1.15",
-      "DownloadUrl": "http://file.liangxiegame.com/Frameworkv0_1_15_5ecaab33_c881_40c8_b43b_065302af9feb.unitypackage",
+      "Version": "v0.1.16",
+      "DownloadUrl": "http://file.liangxiegame.com/Frameworkv0_1_16_8fd584a7_bff2_4fe8_862d_7686f913e19c.unitypackage",
       "InstallPath": "Assets/QFramework/Framework",
       "DocUrl": null,
       "Type": 0,
       "AccessRight": 0,
-      "VersionNumber": 115,
+      "VersionNumber": 116,
       "Installed": true
     },
     {
@@ -1771,6 +1797,20 @@
       "readme": {
         "items": [
           {
+            "version": "v0.0.3",
+            "content": "添加 4 gradient",
+            "author": "liangxie",
+            "date": "2019 年 09 月 29 日 16:24",
+            "VersionNumber": 3
+          },
+          {
+            "version": "v0.0.2",
+            "content": "完成颜色置灰案例",
+            "author": "liangxie",
+            "date": "2019 年 09 月 27 日 16:50",
+            "VersionNumber": 2
+          },
+          {
             "version": "v0.0.1",
             "content": "实现 Gray ",
             "author": "liangxie",
@@ -1780,6 +1820,44 @@
         ]
       },
       "PackageVersions": [
+        {
+          "Version": "v0.0.3",
+          "Type": 6,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/SpriteShaderv0_0_3_67b5dc9b_7c85_43f7_8f13_7a20b6aa6696.unitypackage",
+          "InstallPath": "Assets/QFramework/Pro/Shader/SpriteShader/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.3",
+            "content": "添加 4 gradient",
+            "author": "liangxie",
+            "date": "2019 年 09 月 29 日 16:24",
+            "VersionNumber": 3
+          },
+          "Id": "5888b790-bf70-4c73-995c-c7d0f87eeb37",
+          "Name": "SpriteShader",
+          "VersionNumber": 3,
+          "FileName": "SpriteShader_v0.0.3.unitypackage"
+        },
+        {
+          "Version": "v0.0.2",
+          "Type": 6,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/SpriteShaderv0_0_2_985cb650_aefc_47c8_a167_1fbe11612f0a.unitypackage",
+          "InstallPath": "Assets/QFramework/Pro/Shader/SpriteShader/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.2",
+            "content": "完成颜色置灰案例",
+            "author": "liangxie",
+            "date": "2019 年 09 月 27 日 16:50",
+            "VersionNumber": 2
+          },
+          "Id": "1cefc90b-e6ed-44c7-b3e6-be55edf1aa1f",
+          "Name": "SpriteShader",
+          "VersionNumber": 2,
+          "FileName": "SpriteShader_v0.0.2.unitypackage"
+        },
         {
           "Version": "v0.0.1",
           "Type": 6,
@@ -1800,13 +1878,13 @@
           "FileName": "SpriteShader_v0.0.1.unitypackage"
         }
       ],
-      "Version": "v0.0.1",
-      "DownloadUrl": "http://file.liangxiegame.com/SpriteShaderv0_0_1_85c89ae2_7429_4cbd_96c4_aec8bf3b6a14.unitypackage",
+      "Version": "v0.0.3",
+      "DownloadUrl": "http://file.liangxiegame.com/SpriteShaderv0_0_3_67b5dc9b_7c85_43f7_8f13_7a20b6aa6696.unitypackage",
       "InstallPath": "Assets/QFramework/Pro/Shader/SpriteShader/",
       "DocUrl": null,
       "Type": 6,
       "AccessRight": 0,
-      "VersionNumber": 1,
+      "VersionNumber": 3,
       "Installed": false
     },
     {
@@ -2563,6 +2641,191 @@
       "Installed": false
     },
     {
+      "Name": "MyFramework",
+      "readme": {
+        "items": [
+          {
+            "version": "v0.0.9",
+            "content": "MyTween重构了逻辑与mod代码，整理文件夹。",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 29 日 17:09",
+            "VersionNumber": 9
+          },
+          {
+            "version": "v0.0.8",
+            "content": "更新了一部分拓展方法",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 28 日 16:06",
+            "VersionNumber": 8
+          },
+          {
+            "version": "v0.0.7",
+            "content": "更新MyTween，整理代码结构，处理了极限情况，优化了逻辑算法",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 27 日 20:53",
+            "VersionNumber": 7
+          },
+          {
+            "version": "v0.0.6",
+            "content": "添加了简单的MyTween小功能",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 26 日 23:25",
+            "VersionNumber": 6
+          },
+          {
+            "version": "v0.0.5",
+            "content": "就方便自己更新。。。",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 21 日 13:34",
+            "VersionNumber": 5
+          }
+        ]
+      },
+      "PackageVersions": [
+        {
+          "Version": "v0.0.9",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_9_d997cd05_713d_4f1c_80ce_570a4d3f7875.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.9",
+            "content": "MyTween重构了逻辑与mod代码，整理文件夹。",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 29 日 17:09",
+            "VersionNumber": 9
+          },
+          "Id": "e33b732d-f50d-488e-ade9-8ea2f7e2271d",
+          "Name": "MyFramework",
+          "VersionNumber": 9,
+          "FileName": "MyFramework_v0.0.9.unitypackage"
+        },
+        {
+          "Version": "v0.0.8",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_8_7e2c5858_b4e5_4f9a_8f8f_173b677018c4.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.8",
+            "content": "更新了一部分拓展方法",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 28 日 16:06",
+            "VersionNumber": 8
+          },
+          "Id": "e28e3873-27a8-47c4-9464-ee88581299c7",
+          "Name": "MyFramework",
+          "VersionNumber": 8,
+          "FileName": "MyFramework_v0.0.8.unitypackage"
+        },
+        {
+          "Version": "v0.0.7",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_7_7f12bfc6_82d2_41a3_aa8f_74cd50480bcd.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.7",
+            "content": "更新MyTween，整理代码结构，处理了极限情况，优化了逻辑算法",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 27 日 20:53",
+            "VersionNumber": 7
+          },
+          "Id": "2ea81ca9-f07d-4a92-a9a5-a3008313da32",
+          "Name": "MyFramework",
+          "VersionNumber": 7,
+          "FileName": "MyFramework_v0.0.7.unitypackage"
+        },
+        {
+          "Version": "v0.0.6",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_6_a3f00794_d321_4667_add3_581fdafa4133.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.6",
+            "content": "添加了简单的MyTween小功能",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 26 日 23:25",
+            "VersionNumber": 6
+          },
+          "Id": "c3e85e41-0935-4782-9ae3-edfdf38c1385",
+          "Name": "MyFramework",
+          "VersionNumber": 6,
+          "FileName": "MyFramework_v0.0.6.unitypackage"
+        },
+        {
+          "Version": "v0.0.6",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_6_417c822d_d114_4343_b6f2_47864249ea59.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.6",
+            "content": "添加了简单的MyTween小功能",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 25 日 21:17",
+            "VersionNumber": 6
+          },
+          "Id": "d572b933-e8d1-47d9-89c3-6164e1a6ccd3",
+          "Name": "MyFramework",
+          "VersionNumber": 6,
+          "FileName": "MyFramework_v0.0.6.unitypackage"
+        },
+        {
+          "Version": "v0.0.5",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_5_4b7e608c_606c_4240_9241_0c9bb6d88f9c.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.5",
+            "content": "就方便自己更新。。。",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 21 日 13:34",
+            "VersionNumber": 5
+          },
+          "Id": "4f174b4f-19c8-46bd-ac7b-bd284a3e0498",
+          "Name": "MyFramework",
+          "VersionNumber": 5,
+          "FileName": "MyFramework_v0.0.5.unitypackage"
+        },
+        {
+          "Version": "v0.0.5",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_5_47dc4518_86af_4c47_a6d2_642c31582ac2.unitypackage",
+          "InstallPath": "Assets/test/MyFramework/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.5",
+            "content": "就方便自己更新。。。",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 21 日 11:16",
+            "VersionNumber": 5
+          },
+          "Id": "ef590a91-d94d-4ba8-bd94-09a7178ee19f",
+          "Name": "MyFramework",
+          "VersionNumber": 5,
+          "FileName": "MyFramework_v0.0.5.unitypackage"
+        }
+      ],
+      "Version": "v0.0.9",
+      "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_9_d997cd05_713d_4f1c_80ce_570a4d3f7875.unitypackage",
+      "InstallPath": "Assets/test/MyFramework/",
+      "DocUrl": null,
+      "Type": 0,
+      "AccessRight": 0,
+      "VersionNumber": 9,
+      "Installed": false
+    },
+    {
       "Name": "4.ObserverPattern",
       "readme": {
         "items": [
@@ -2757,6 +3020,13 @@
       "readme": {
         "items": [
           {
+            "version": "v0.5.6",
+            "content": "suppot 2018.2",
+            "author": "liangxie",
+            "date": "2019 年 09 月 26 日 17:43",
+            "VersionNumber": 506
+          },
+          {
             "version": "v0.5.5",
             "content": "为了支持 ILKit 提供了 UIDefaultPanel",
             "author": "liangxie",
@@ -2773,6 +3043,25 @@
         ]
       },
       "PackageVersions": [
+        {
+          "Version": "v0.5.6",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/3.UIKitv0_5_6_c489bff6_9580_4d67_bde1_ff244be13c40.unitypackage",
+          "InstallPath": "Assets/QFramework/Framework/3.UIKit/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.5.6",
+            "content": "suppot 2018.2",
+            "author": "liangxie",
+            "date": "2019 年 09 月 26 日 17:43",
+            "VersionNumber": 506
+          },
+          "Id": "7627ef21-8921-439d-a68f-5c123cec25d1",
+          "Name": "3.UIKit",
+          "VersionNumber": 506,
+          "FileName": "3.UIKit_v0.5.6.unitypackage"
+        },
         {
           "Version": "v0.5.5",
           "Type": 0,
@@ -2812,13 +3101,13 @@
           "FileName": "3.UIKit_v0.5.4.unitypackage"
         }
       ],
-      "Version": "v0.5.5",
-      "DownloadUrl": "http://file.liangxiegame.com/3.UIKitv0_5_5_7ff1ecf3_fdc7_456a_acdc_bbcc09cbffe6.unitypackage",
+      "Version": "v0.5.6",
+      "DownloadUrl": "http://file.liangxiegame.com/3.UIKitv0_5_6_c489bff6_9580_4d67_bde1_ff244be13c40.unitypackage",
       "InstallPath": "Assets/QFramework/Framework/3.UIKit/",
       "DocUrl": null,
       "Type": 0,
       "AccessRight": 0,
-      "VersionNumber": 505,
+      "VersionNumber": 506,
       "Installed": true
     },
     {
@@ -3746,94 +4035,6 @@
       "Installed": false
     },
     {
-      "Name": "MyFramework",
-      "readme": {
-        "items": [
-          {
-            "version": "v0.0.6",
-            "content": "添加了简单的MyTween小功能",
-            "author": "m_ShiHuai",
-            "date": "2019 年 09 月 25 日 21:17",
-            "VersionNumber": 6
-          },
-          {
-            "version": "v0.0.5",
-            "content": "就方便自己更新。。。",
-            "author": "m_ShiHuai",
-            "date": "2019 年 09 月 21 日 13:34",
-            "VersionNumber": 5
-          }
-        ]
-      },
-      "PackageVersions": [
-        {
-          "Version": "v0.0.6",
-          "Type": 0,
-          "AccessRight": 0,
-          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_6_417c822d_d114_4343_b6f2_47864249ea59.unitypackage",
-          "InstallPath": "Assets/test/MyFramework/",
-          "DocUrl": null,
-          "Readme": {
-            "version": "v0.0.6",
-            "content": "添加了简单的MyTween小功能",
-            "author": "m_ShiHuai",
-            "date": "2019 年 09 月 25 日 21:17",
-            "VersionNumber": 6
-          },
-          "Id": "d572b933-e8d1-47d9-89c3-6164e1a6ccd3",
-          "Name": "MyFramework",
-          "VersionNumber": 6,
-          "FileName": "MyFramework_v0.0.6.unitypackage"
-        },
-        {
-          "Version": "v0.0.5",
-          "Type": 0,
-          "AccessRight": 0,
-          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_5_4b7e608c_606c_4240_9241_0c9bb6d88f9c.unitypackage",
-          "InstallPath": "Assets/test/MyFramework/",
-          "DocUrl": null,
-          "Readme": {
-            "version": "v0.0.5",
-            "content": "就方便自己更新。。。",
-            "author": "m_ShiHuai",
-            "date": "2019 年 09 月 21 日 13:34",
-            "VersionNumber": 5
-          },
-          "Id": "4f174b4f-19c8-46bd-ac7b-bd284a3e0498",
-          "Name": "MyFramework",
-          "VersionNumber": 5,
-          "FileName": "MyFramework_v0.0.5.unitypackage"
-        },
-        {
-          "Version": "v0.0.5",
-          "Type": 0,
-          "AccessRight": 0,
-          "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_5_47dc4518_86af_4c47_a6d2_642c31582ac2.unitypackage",
-          "InstallPath": "Assets/test/MyFramework/",
-          "DocUrl": null,
-          "Readme": {
-            "version": "v0.0.5",
-            "content": "就方便自己更新。。。",
-            "author": "m_ShiHuai",
-            "date": "2019 年 09 月 21 日 11:16",
-            "VersionNumber": 5
-          },
-          "Id": "ef590a91-d94d-4ba8-bd94-09a7178ee19f",
-          "Name": "MyFramework",
-          "VersionNumber": 5,
-          "FileName": "MyFramework_v0.0.5.unitypackage"
-        }
-      ],
-      "Version": "v0.0.6",
-      "DownloadUrl": "http://file.liangxiegame.com/MyFrameworkv0_0_6_417c822d_d114_4343_b6f2_47864249ea59.unitypackage",
-      "InstallPath": "Assets/test/MyFramework/",
-      "DocUrl": null,
-      "Type": 0,
-      "AccessRight": 0,
-      "VersionNumber": 6,
-      "Installed": false
-    },
-    {
       "Name": "9.Toon",
       "readme": {
         "items": [
@@ -3900,6 +4101,49 @@
       "Type": 0,
       "AccessRight": 0,
       "VersionNumber": 7,
+      "Installed": false
+    },
+    {
+      "Name": "test",
+      "readme": {
+        "items": [
+          {
+            "version": "v0.0.1",
+            "content": "myf测试版本",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 26 日 23:24",
+            "VersionNumber": 1
+          }
+        ]
+      },
+      "PackageVersions": [
+        {
+          "Version": "v0.0.1",
+          "Type": 0,
+          "AccessRight": 0,
+          "DownloadUrl": "http://file.liangxiegame.com/testv0_0_1_14e816ea_9f12_4979_9248_b65a17d3abc8.unitypackage",
+          "InstallPath": "Assets/test/",
+          "DocUrl": null,
+          "Readme": {
+            "version": "v0.0.1",
+            "content": "myf测试版本",
+            "author": "m_ShiHuai",
+            "date": "2019 年 09 月 26 日 23:24",
+            "VersionNumber": 1
+          },
+          "Id": "60e3195f-1827-4ae6-94dc-269e01a04a7b",
+          "Name": "test",
+          "VersionNumber": 1,
+          "FileName": "test_v0.0.1.unitypackage"
+        }
+      ],
+      "Version": "v0.0.1",
+      "DownloadUrl": "http://file.liangxiegame.com/testv0_0_1_14e816ea_9f12_4979_9248_b65a17d3abc8.unitypackage",
+      "InstallPath": "Assets/test/",
+      "DocUrl": null,
+      "Type": 0,
+      "AccessRight": 0,
+      "VersionNumber": 1,
       "Installed": false
     },
     {

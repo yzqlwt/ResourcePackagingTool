@@ -85,11 +85,11 @@
     <Compile Include="Assets\QFramework\Framework\Plugins\HttpClient\Messages\HttpResponseMessage.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\HttpClient\Messages\UploadStatusMessage.cs" />
     <None Include="Assets\QFramework\Framework\Plugins\HttpClient\readme.txt" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files (x86)/2019.2.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

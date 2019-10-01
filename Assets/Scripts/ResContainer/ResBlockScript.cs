@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 using System.IO;
 using System;
 using QF.Master;
+using UnityEngine.EventSystems;
+using QFramework;
+using QFramework.Example;
 
 public class PropertiesChange
 {
@@ -17,7 +20,7 @@ public class SendProperties
     public Dictionary<string, string> FuckProperties;
 }
 
-public class BlockImageScript : MonoBehaviour
+public class ResBlockScript : MonoBehaviour, IPointerClickHandler
 {
     public Image image;
     public Text text;
@@ -37,14 +40,14 @@ public class BlockImageScript : MonoBehaviour
         }
     }
     public Dictionary<string, string> Properties { get; set; }
-    private FileDrag file;
+    private FilePathInfo file;
     private Dictionary<string, string> Template;
     void Start()
     {
         Md5 = "未设置";
     }
 
-    public void SetImage(FileDrag file)
+    public void SetImage(FilePathInfo file)
     {
         this.file = file;
         var toggle = transform.GetComponent<Toggle>();
@@ -68,7 +71,7 @@ public class BlockImageScript : MonoBehaviour
     }
 
 
-    IEnumerator GetImage(FileDrag file)
+    IEnumerator GetImage(FilePathInfo file)
     {
         var path = "";
         if(file.Extension == ".png" )
@@ -94,28 +97,32 @@ public class BlockImageScript : MonoBehaviour
         }
         text.text = file.FileName;
     }
-    public void BlockPropertiesChange(PropertiesChange pro)
-    {
-        Properties = new Dictionary<string, string>(pro.FuckProperties);
-        text.text = Properties["Name"]+file.Extension;
-    }
+
 
     public void onValueChanged(bool open)
     {
         if (open)
         {
-            TypeEventSystem.Send(new SendProperties
+
+            UIMgr.ClosePanel("UIPropertiesPanel");
+            UIMgr.OpenPanel("UIPropertiesPanel", UILevel.Common, new UIPropertiesPanelData()
             {
-                FuckProperties = Properties
+                Properties = this.Properties
             });
-            TypeEventSystem.Register<PropertiesChange>(BlockPropertiesChange);
 
         }
-        else
-        {
-            TypeEventSystem.UnRegister<PropertiesChange>(BlockPropertiesChange);
-        }
-
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        var pointerId = eventData.pointerId;
+        if(pointerId == -1)
+        {
+            Debug.Log("鼠标左键点击");
+        }
+        else if(pointerId == -2)
+        {
+            Debug.Log("鼠标右键点击");
+        }
+    }
 }

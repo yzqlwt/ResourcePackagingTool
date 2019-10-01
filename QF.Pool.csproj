@@ -72,11 +72,11 @@
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\2.Pool\Pool\Pool.cs" />
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\2.Pool\Pool\SafeObjectPool.cs" />
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\2.Pool\Pool\SimpleObjectPool.cs" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Users/yzqlwt/Dropbox/unity/ResourcePackagingTool/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files (x86)/2019.2.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

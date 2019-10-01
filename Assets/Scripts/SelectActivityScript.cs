@@ -44,7 +44,7 @@ public class SelectActivityScript : MonoBehaviour
     }
     public void DownloadNewVersion()
     {
-        Application.OpenURL("http://www.yzqlwt.com:8080/activity/download");
+        Application.OpenURL("https://github.com/yzqlwt/ResourcePackagingTool/releases");
     }
     public void Guide()
     {
@@ -76,6 +76,19 @@ public class SelectActivityScript : MonoBehaviour
             }
         }
     }
+    IEnumerator Upload()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("desc", "value");
+        form.AddField("property", "value");
+        UnityWebRequest request = UnityWebRequest.Post("http://www.yzqlwt.com:8080/activity/uploadconfig", form);
+        yield return request.SendWebRequest();
+        Debug.Log(request.error);
+        Debug.Log(request.responseCode);
+        Debug.Log(request.downloadHandler.text);
+    }
+
+
     IEnumerator GetActivityList()
     {
         var uri = "http://www.yzqlwt.com:8080/activity/list";

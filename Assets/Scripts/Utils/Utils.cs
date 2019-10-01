@@ -71,6 +71,10 @@ namespace QuickTools
             }
             Directory.Delete(directoryPath);    //删除空文件夹
         }
+        public static string GetVarName(System.Linq.Expressions.Expression<Func<string, string>> exp)
+        {
+            return ((System.Linq.Expressions.MemberExpression)exp.Body).Member.Name;
+        }
 
     }
 }
