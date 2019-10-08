@@ -326,15 +326,11 @@
     <Compile Include="Assets\Scripts\AppStart.cs" />
     <Compile Include="Assets\Scripts\FileDrag\B83.Win32.cs" />
     <Compile Include="Assets\Scripts\FileDrag\FileDragAndDrop.cs" />
-    <Compile Include="Assets\Scripts\MeshPrefabScript.cs" />
     <Compile Include="Assets\Scripts\MessageBox\MessageBoxV2.cs" />
     <Compile Include="Assets\Scripts\MessageBox\MessageBoxV2Test.cs" />
     <Compile Include="Assets\Scripts\MessageBox\MessageTextContainer.cs" />
     <Compile Include="Assets\Scripts\MessageBox\MessageTimer.cs" />
-    <Compile Include="Assets\Scripts\Properties\PropertiesScript.cs" />
-    <Compile Include="Assets\Scripts\ResContainer\ResBlockScript.cs" />
-    <Compile Include="Assets\Scripts\ResContainer\ResContainer.cs" />
-    <Compile Include="Assets\Scripts\SelectActivityScript.cs" />
+    <Compile Include="Assets\Scripts\ResBlockScript.cs" />
     <Compile Include="Assets\Scripts\UIs\UIActivityPanel.cs" />
     <Compile Include="Assets\Scripts\UIs\UIActivityPanel.Designer.cs" />
     <Compile Include="Assets\Scripts\UIs\UIAddActivityPanel.cs" />
@@ -343,6 +339,7 @@
     <Compile Include="Assets\Scripts\UIs\UIPropertiesPanel.Designer.cs" />
     <Compile Include="Assets\Scripts\UIs\UIResourcePanel.cs" />
     <Compile Include="Assets\Scripts\UIs\UIResourcePanel.Designer.cs" />
+    <Compile Include="Assets\Scripts\Utils\CommonConfig.cs" />
     <Compile Include="Assets\Scripts\Utils\DirTools.cs" />
     <Compile Include="Assets\Scripts\Utils\GenerateCode.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />

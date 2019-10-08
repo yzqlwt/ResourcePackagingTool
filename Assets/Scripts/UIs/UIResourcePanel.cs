@@ -30,7 +30,7 @@ namespace QFramework.Example
     public partial class UIResourcePanel : QFramework.UIPanel
     {
 
-        public string Version = "v0.0.1";
+        public string Version = "v0.0.2";
         public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>();
 
         public Transform ResBlockPrefab;
@@ -199,7 +199,7 @@ namespace QFramework.Example
 
         IEnumerator GetConfigTemplate(string activity)
         {
-            var uri = "http://127.0.0.1:8080/activity/config?activity=" + activity;
+            var uri = string.Format("{0}activity/config?activity=" + activity, CommonConfig.ServerUrl);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
             {
                 // Request and wait for the desired page.
@@ -213,6 +213,7 @@ namespace QFramework.Example
                 {
                     var text = webRequest.downloadHandler.text;
                     var template = QF.SerializeHelper.FromJson<ActivityConfig>(text).Config;
+                    template = template != null ? template : new Dictionary<string, string>();
                     Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
                     TypeEventSystem.Register<FilePathInfo>((file)=>
                     {

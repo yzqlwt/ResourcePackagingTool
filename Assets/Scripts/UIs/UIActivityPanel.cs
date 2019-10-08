@@ -150,7 +150,7 @@ namespace QFramework.Example
                     ActivityOptions.GetComponent<Dropdown>().ClearOptions();
                     ActivityOptions.GetComponent<Dropdown>().AddOptions(new List<string>
                 {
-                    "请先选择课程"
+                    "请先选择互动"
                 });
 
                     var Activities = list.Select((kv) =>

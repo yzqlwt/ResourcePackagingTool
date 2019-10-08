@@ -90,7 +90,8 @@ namespace QFramework.Example
                 form.AddField("desc", desc);
                 form.AddField("activityIndex", activityIndex);
                 form.AddField("type", PanelType);
-                WWW getData = new WWW("http://127.0.0.1:8080/activity/upload", form);
+                var url = string.Format("{0}activity/upload", CommonConfig.ServerUrl);
+                WWW getData = new WWW(url, form);
                 yield return getData;
                 if (getData.error != null)
                 {
@@ -141,7 +142,7 @@ namespace QFramework.Example
         }
         IEnumerator GetConfig(string activity)
         {
-            var uri = "http://127.0.0.1:8080/activity/config?activity=" + activity;
+            var uri = string.Format("{0}activity/activity/config?activity=" + activity, CommonConfig.ServerUrl);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
             {
                 // Request and wait for the desired page.
