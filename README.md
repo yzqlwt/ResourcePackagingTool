@@ -9,3 +9,9 @@
 
 ## 使用提示： ##
 图片合图调用的是TexturePackage,首次使用TP工具需要先同意协议。
+
+## 简单实用流程 ##
+![image](https://github.com/yzqlwt/ResourcePackagingTool/blob/master/raw/微信图片编辑_20191008151755.jpg)
+![image](https://github.com/yzqlwt/ResourcePackagingTool/blob/master/raw/微信截图_20191008152445.png)
+![image](https://github.com/yzqlwt/ResourcePackagingTool/blob/master/raw/微信截图_20191008153458.png)
+![image](https://github.com/yzqlwt/ResourcePackagingTool/blob/master/raw/微信截图_20191008160432.png)
