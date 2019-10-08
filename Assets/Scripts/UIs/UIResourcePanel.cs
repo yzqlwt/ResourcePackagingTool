@@ -80,6 +80,21 @@ namespace QFramework.Example
             TypeEventSystem.Register<ResBlockNameChanged>(NameChanged);
             Export.onClick.AddListener(ExportRes);
             Clear.onClick.AddListener(ClearRes);
+            TypeEventSystem.Register<RemoveBlock>((tmp)=> {
+                var md5 = tmp.MD5;
+                   
+                ResMap.Remove(md5);
+                string resDir = DirTools.GetTmpResDir();
+                string filepath = Path.Combine(resDir, md5 + tmp.Extension);
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+                else
+                {
+                    Debug.LogError("资源不存在！！！");
+                }
+            });
         }
 
         public void NameChanged(ResBlockNameChanged nameChanged)

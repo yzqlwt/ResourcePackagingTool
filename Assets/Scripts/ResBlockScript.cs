@@ -10,15 +10,12 @@ using UnityEngine.EventSystems;
 using QFramework;
 using QFramework.Example;
 
-public class PropertiesChange
+public class RemoveBlock
 {
-    public Dictionary<string, string> FuckProperties;
+    public string MD5;
+    public string Extension;
 }
 
-public class SendProperties
-{
-    public Dictionary<string, string> FuckProperties;
-}
 
 public class ResBlockScript : MonoBehaviour, IPointerClickHandler
 {
@@ -123,6 +120,12 @@ public class ResBlockScript : MonoBehaviour, IPointerClickHandler
         else if(pointerId == -2)
         {
             Debug.Log("鼠标右键点击");
+            TypeEventSystem.Send(new RemoveBlock()
+            {
+                MD5 = Properties["MD5"],
+                Extension = Properties["Extension"]
+            });
+            Destroy(gameObject);
         }
     }
 }
