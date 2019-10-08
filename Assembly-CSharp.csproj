@@ -322,6 +322,7 @@
     <Compile Include="Assets\QFramework\Framework\Plugins\MiniJSON\MiniJSON.cs" />
     <Compile Include="Assets\QFramework\Pro\FrameworkDesign\3.TypeEventSystem\TypeEventSystem.cs" />
     <Compile Include="Assets\QFramework\Pro\FrameworkDesign\3.TypeEventSystem\TypeEventSystemTest.cs" />
+    <Compile Include="Assets\Scripts\ActivityConfig.cs" />
     <Compile Include="Assets\Scripts\AppStart.cs" />
     <Compile Include="Assets\Scripts\FileDrag\B83.Win32.cs" />
     <Compile Include="Assets\Scripts\FileDrag\FileDragAndDrop.cs" />

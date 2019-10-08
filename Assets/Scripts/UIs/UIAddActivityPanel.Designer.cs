@@ -30,6 +30,9 @@ namespace QFramework.Example
         public UnityEngine.UI.InputField InputFieldDesc;
         
         [SerializeField()]
+        public UnityEngine.UI.Button Text;
+        
+        [SerializeField()]
         public UnityEngine.UI.Button Check;
         
         [SerializeField()]
@@ -57,6 +60,7 @@ namespace QFramework.Example
         {
             InputFieldConfig = null;
             InputFieldDesc = null;
+            Text = null;
             Check = null;
             Submit = null;
             InputFieldActivityIndex = null;

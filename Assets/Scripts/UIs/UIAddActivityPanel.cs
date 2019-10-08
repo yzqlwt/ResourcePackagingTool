@@ -15,16 +15,22 @@ namespace QFramework.Example
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
+    using UnityEngine.Networking;
     using UnityEngine.UI;
     
     
     public class UIAddActivityPanelData : QFramework.UIPanelData
     {
+        public string type;
+        public string activityIndex;
     }
     
     public partial class UIAddActivityPanel : QFramework.UIPanel
     {
-        
+
+        public string PanelType;
+        public string ActivityIndex;
+
         protected override void ProcessMsg(int eventId, QFramework.QMsg msg)
         {
             throw new System.NotImplementedException ();
@@ -33,11 +39,27 @@ namespace QFramework.Example
         protected override void OnInit(QFramework.IUIData uiData)
         {
             mData = uiData as UIAddActivityPanelData ?? new UIAddActivityPanelData();
+            PanelType = mData.type;
+            ActivityIndex = mData.activityIndex;
             // please add init code here
             Check.onClick.AddListener(()=>
             {
                 CheckClick();
             });
+            Submit.onClick.AddListener(()=> {
+                StartCoroutine(SubmitClick());
+            });
+            Text.onClick.AddListener(() =>
+            {
+                Application.OpenURL("https://www.bejson.com");
+            });
+            if(PanelType == "Modify")
+            {
+                InputFieldActivityIndex.text = ActivityIndex;
+                InputFieldActivityIndex.readOnly = true;
+                StartCoroutine(GetConfig(ActivityIndex));
+            }
+            Debug.Log(PanelType);
         }
         
         protected override void OnOpen(QFramework.IUIData uiData)
@@ -62,14 +84,18 @@ namespace QFramework.Example
             {
                 var config = InputFieldConfig.text;
                 var desc = InputFieldDesc.text;
+                var activityIndex = InputFieldActivityIndex.text;
                 WWWForm form = new WWWForm();
                 form.AddField("config", config);
                 form.AddField("desc", desc);
-                WWW getData = new WWW("http://localhost/test", form);
+                form.AddField("activityIndex", activityIndex);
+                form.AddField("type", PanelType);
+                WWW getData = new WWW("http://127.0.0.1:8080/activity/upload", form);
                 yield return getData;
                 if (getData.error != null)
                 {
                     Debug.Log(getData.text);
+                    MessageBoxV2.AddMessage(getData.text, 3);
                 }
                 else
                 {
@@ -107,7 +133,34 @@ namespace QFramework.Example
                 MessageBoxV2.AddMessage(ex.Message,3);
                 ret = false;
             }
+            if (ret)
+            {
+                MessageBoxV2.AddMessage("校验成功！！！", 3);
+            }
             return ret;
         }
+        IEnumerator GetConfig(string activity)
+        {
+            var uri = "http://127.0.0.1:8080/activity/config?activity=" + activity;
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+            {
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.isNetworkError)
+                {
+                    Debug.Log(": Error: " + webRequest.error);
+                }
+                else
+                {
+                    var text = webRequest.downloadHandler.text;
+                    Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
+                    var config = QF.SerializeHelper.FromJson<ActivityConfig>(text);
+                    InputFieldConfig.text = QF.SerializeHelper.ToJson<Dictionary<string, string>>(config.Config);
+                    InputFieldDesc.text = config.Desc;
+                }
+            }
+        }
     }
+
 }

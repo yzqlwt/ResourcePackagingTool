@@ -40,7 +40,7 @@ namespace QFramework.Example
             mData = uiData as UIActivityPanelData ?? new UIActivityPanelData();
             // please add init code here
             AddActivity.onClick.AddListener(AddActivityClick);
-            ModifyActivity.onClick.AddListener(AddActivityClick);
+            ModifyActivity.onClick.AddListener(ModifyActivityClick);
             Guide.onClick.AddListener(GuideToTexturePackage);
             Refresh.onClick.AddListener(RefreshList);
             Start.onClick.AddListener(StartClick);
@@ -67,9 +67,32 @@ namespace QFramework.Example
         {
         }
 
+        private void ModifyActivityClick()
+        {
+            var text = ActivityOptions.GetComponent<Dropdown>().captionText.text;
+            if (text.IndexOf("G") > -1)
+            {
+                UIMgr.OpenPanel("UIAddActivityPanel", UILevel.Common, new UIAddActivityPanelData()
+                {
+                    type = "Modify",
+                    activityIndex = text
+                });
+                UIMgr.ClosePanel("UIActivityPanel");
+            }
+            else
+            {
+                MessageBoxV2.AddMessage("œ»—°‘Òª•∂Ø");
+            }
+
+        }
+
         private void AddActivityClick()
         {
-            UIMgr.OpenPanel("UIAddActivityPanel", UILevel.Common);
+            UIMgr.OpenPanel("UIAddActivityPanel", UILevel.Common, new UIAddActivityPanelData()
+            {
+                type = "Add",
+                activityIndex = ""
+            });
             UIMgr.ClosePanel("UIActivityPanel");
         }
         private void StartClick()

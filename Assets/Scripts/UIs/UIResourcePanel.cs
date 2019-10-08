@@ -11,9 +11,11 @@
 namespace QFramework.Example
 {
     using QF.Master;
+    using QuickTools;
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Networking;
@@ -29,7 +31,6 @@ namespace QFramework.Example
     {
 
         public string Version = "v0.0.1";
-        public Dictionary<string, Dictionary<string, string>> TotalProperties = new Dictionary<string, Dictionary<string, string>>();
         public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>();
 
         public Transform ResBlockPrefab;
@@ -77,6 +78,8 @@ namespace QFramework.Example
             DirTools.Version = Version;
             StartCoroutine(GetConfigTemplate(activity));
             TypeEventSystem.Register<ResBlockNameChanged>(NameChanged);
+            Export.onClick.AddListener(ExportRes);
+            Clear.onClick.AddListener(ClearRes);
         }
 
         public void NameChanged(ResBlockNameChanged nameChanged)
@@ -88,6 +91,107 @@ namespace QFramework.Example
                 tran.GetComponent<ResBlockScript>().text.text = nameChanged.FileName;
             }
         }
+        public List<Transform> GetResTransform()
+        {
+            var list = new List<Transform>();
+            foreach (Transform tran in Content)
+            {
+                list.Add(tran);
+            }
+            return list;
+        }
+
+        public void ClearRes()
+        {
+            ResMap.Clear();
+            var lst = new List<Transform>();
+            foreach (Transform child in Content)
+            {
+                lst.Add(child);
+            }
+            for (int i = 0; i < lst.Count; i++)
+            {
+                Destroy(lst[i].gameObject);
+
+            }
+            DirTools.CleanUpDir();
+        }
+
+        public void TexturePackage()
+        {
+            var resDir = DirTools.GetTmpResDir();
+            string[] files = System.IO.Directory.GetFiles(resDir);
+            var outputDir = DirTools.GetTmpOutPutDir();
+
+            var isOn = ToggleTexturePackage.isOn;
+            if (isOn)
+            {
+                string name = "default";
+                var command = Application.streamingAssetsPath + "/bin/TexturePacker.exe";
+                var argu = string.Format(@"{0} --sheet {1}/{2}.png --data {1}/{2}.plist --allow-free-size --no-trim --max-size 2048 --format cocos2d", resDir, outputDir, name);
+                Utils.processCommand(command, argu);
+
+                // Copy the files and overwrite destination files if they already exist.
+                foreach (string s in files)
+                {
+                    // Use static Path methods to extract only the file name from the path.
+                    if (System.IO.Path.GetExtension(s) != ".png")
+                    {
+                        var fileName = System.IO.Path.GetFileName(s);
+                        var destFile = System.IO.Path.Combine(outputDir, fileName);
+                        System.IO.File.Copy(s, destFile, true);
+                    }
+
+                }
+            }
+            else
+            {
+
+                foreach (string s in files)
+                {
+                    var fileName = System.IO.Path.GetFileName(s);
+                    var destFile = System.IO.Path.Combine(outputDir, fileName);
+                    System.IO.File.Copy(s, destFile, true);
+                }
+            }
+        }
+
+        public void Compress()
+        {
+            var isOn = ToggleCompress.isOn;
+            if (isOn)
+            {
+                ZipUtil.ZipDirectory(DirTools.GetTmpOutPutDir(), DirTools.GetOutPutDir() + "/ResConfig.zip", false);
+            }
+        }
+
+        public void ExportRes()
+        {
+            Debug.Log("导出资源");
+            Dictionary<string, Dictionary<string, string>> TotalProperties = new Dictionary<string, Dictionary<string, string>>();
+            var list = GetResTransform();
+            foreach (var tran in list)
+            {
+                var BlockImageScript = tran.GetComponent<ResBlockScript>();
+                var properties = BlockImageScript.Properties;
+                try
+                {
+                    TotalProperties.Add(properties["Name"], properties);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex);
+                    MessageBoxV2.AddMessage("导出失败：重复的资源名称");
+                    return;
+                }
+            }
+            var dataAsJson = QF.SerializeHelper.ToJson(TotalProperties);
+            File.WriteAllText(DirTools.GetTmpOutPutDir() + "/ResConfig.json", dataAsJson);
+            TexturePackage();
+            Compress();
+            GenerateCode.ImageConfig(TotalProperties);
+            System.Diagnostics.Process.Start(DirTools.GetBasePathDir());
+        }
 
         protected override void OnClose()
         {
@@ -95,7 +199,7 @@ namespace QFramework.Example
 
         IEnumerator GetConfigTemplate(string activity)
         {
-            var uri = "http://www.yzqlwt.com:8080/activity/config?activity=" + activity;
+            var uri = "http://127.0.0.1:8080/activity/config?activity=" + activity;
             using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
             {
                 // Request and wait for the desired page.
@@ -108,8 +212,8 @@ namespace QFramework.Example
                 else
                 {
                     var text = webRequest.downloadHandler.text;
-                    var template = QF.SerializeHelper.FromJson<Dictionary<string, string>>(text);
-                    Debug.Log(text);
+                    var template = QF.SerializeHelper.FromJson<ActivityConfig>(text).Config;
+                    Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
                     TypeEventSystem.Register<FilePathInfo>((file)=>
                     {
                         if (ResMap.ContainsKey(file.MD5))
