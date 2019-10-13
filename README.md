@@ -13,6 +13,9 @@
 9. 使用后台账户密码登录工具，并且绑定设备码
 10. 与配置包一同导出的还有一段lua代码，帮助解析使用配置包
 
+## 下载
+https://github.com/yzqlwt/ResourcePackagingTool/releases
+
 ## 几个使用场景
 
 - 改需求了，需要增加一张图。
