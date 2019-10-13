@@ -30,6 +30,7 @@ namespace QFramework.Example
     public partial class UIActivityPanel : QFramework.UIPanel
     {
         private string Version = "0.0.2";
+        private Dictionary<string, string> machines = new Dictionary<string, string>();
         protected override void ProcessMsg(int eventId, QFramework.QMsg msg)
         {
             throw new System.NotImplementedException ();
@@ -47,6 +48,50 @@ namespace QFramework.Example
             Update.onClick.AddListener(DownloadNewVersion);
             ActivityOptions.GetComponent<Dropdown>().onValueChanged.AddListener(ActivityOptionChanged);
             StartCoroutine(GetActivityList());
+            var machineCode = QuickTools.Utils.GetPcInfo();
+            MachineCode.text = "设备码:" + machineCode;
+            Debug.Log(machineCode);
+            ImagePanel.gameObject.SetActive(false);
+            StartCoroutine(GetMachines(machineCode));
+            CopyMachineCode.onClick.AddListener(() =>
+            {
+                UnityEngine.GUIUtility.systemCopyBuffer = machineCode;
+                MessageBoxV2.AddMessage("复制到剪切板成功！！！");
+            });
+
+        }
+
+        IEnumerator GetMachines(string machineCode)
+        {
+            var uri = "http://www.yzqlwt.com:8080/activity/machines";
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+            {
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.isNetworkError)
+                {
+                    Debug.Log(": Error: " + webRequest.error);
+                }
+                else
+                {
+
+                    var machines = QF.SerializeHelper.FromJson<Dictionary<string, string>>(webRequest.downloadHandler.text);
+                    if (machines.ContainsKey(machineCode))
+                    {
+                        MachineCode.text = "设备码:" + machineCode + " 已激活";
+                        ImagePanel.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        MachineCode.text = "设备码:" + machineCode + " 未激活";
+
+                    }
+
+
+                }
+
+            }
         }
 
 

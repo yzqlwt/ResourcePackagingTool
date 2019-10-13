@@ -44,6 +44,9 @@ namespace QFramework.Example
         [SerializeField()]
         public UnityEngine.UI.Button Clear;
         
+        [SerializeField()]
+        public UnityEngine.UI.Button God;
+        
         private UIResourcePanelData mPrivateData = null;
         
         public UIResourcePanelData mData
@@ -68,6 +71,7 @@ namespace QFramework.Example
             ToggleCompress = null;
             Export = null;
             Clear = null;
+            God = null;
             mData = null;
         }
     }

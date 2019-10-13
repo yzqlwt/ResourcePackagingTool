@@ -24,6 +24,9 @@ namespace QFramework.Example
         public const string NAME = "UIActivityPanel";
         
         [SerializeField()]
+        public UnityEngine.UI.Image ImagePanel;
+        
+        [SerializeField()]
         public UnityEngine.UI.Image ActivityOptions;
         
         [SerializeField()]
@@ -44,6 +47,12 @@ namespace QFramework.Example
         [SerializeField()]
         public UnityEngine.UI.Button Start;
         
+        [SerializeField()]
+        public UnityEngine.UI.Text MachineCode;
+        
+        [SerializeField()]
+        public UnityEngine.UI.Button CopyMachineCode;
+        
         private UIActivityPanelData mPrivateData = null;
         
         public UIActivityPanelData mData
@@ -61,6 +70,7 @@ namespace QFramework.Example
         
         protected override void ClearUIComponents()
         {
+            ImagePanel = null;
             ActivityOptions = null;
             Update = null;
             Refresh = null;
@@ -68,6 +78,8 @@ namespace QFramework.Example
             ModifyActivity = null;
             Guide = null;
             Start = null;
+            MachineCode = null;
+            CopyMachineCode = null;
             mData = null;
         }
     }

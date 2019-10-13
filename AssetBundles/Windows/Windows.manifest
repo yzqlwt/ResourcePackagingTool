@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3916891811
+CRC: 2257133753
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -13,4 +13,10 @@ AssetBundleManifest:
       Dependencies: {}
     Info_3:
       Name: uiaddactivitypanel_prefab
+      Dependencies: {}
+    Info_4:
+      Name: uiuploadpanel_prefab
+      Dependencies: {}
+    Info_5:
+      Name: uiloginpanel_prefab
       Dependencies: {}

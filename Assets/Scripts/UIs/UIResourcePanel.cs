@@ -30,8 +30,8 @@ namespace QFramework.Example
     public partial class UIResourcePanel : QFramework.UIPanel
     {
 
-        public string Version = "v0.0.2";
-        public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>();
+        private string Version = "v1.0.0";
+        public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>(); //MD5-ResBlockPrefab
 
         public Transform ResBlockPrefab;
         public Transform Content;
@@ -61,7 +61,7 @@ namespace QFramework.Example
             {
                 FilePath = @"C:\Users\yzqlwt\Dropbox\flash\加减法\brick.png",
                 Extension = ".png",
-                FileName = "brick.png",
+                FileName = "brick333.png",
                 MD5 = "dddddddddddddddddddddd222"
             });
         }
@@ -72,7 +72,7 @@ namespace QFramework.Example
             // please add init code here
             var activity = mData.activityIndex;
             TextLabel.text = "ResArea-" + activity;
-            Debug.Log(activity);
+            DirTools.Version = Version;
             gameObject.AddComponent<FileDragAndDrop>();
             DirTools.ActivityIndex = activity;
             DirTools.Version = Version;
@@ -80,6 +80,13 @@ namespace QFramework.Example
             TypeEventSystem.Register<ResBlockNameChanged>(NameChanged);
             Export.onClick.AddListener(ExportRes);
             Clear.onClick.AddListener(ClearRes);
+            God.onClick.AddListener(() =>
+            {
+                UIMgr.OpenPanel("UIUploadPanel", UILevel.Common, new UIUploadPanelData()
+                {
+                    ActivityIndex = activity
+                }) ;    
+            });
             TypeEventSystem.Register<RemoveBlock>((tmp)=> {
                 var md5 = tmp.MD5;
                    
@@ -94,6 +101,26 @@ namespace QFramework.Example
                 {
                     Debug.LogError("资源不存在！！！");
                 }
+            });
+            TypeEventSystem.Register<SetBlockProperties>((tmp) => {
+                var md5 = tmp.MD5;
+                var properties = tmp.properties;
+                var ResBlock = ResMap[md5];
+                ResBlock.GetComponent<ResBlockScript>().Properties = properties;
+            });
+            TypeEventSystem.Register<ClearRescoursePanel>((tmp) => {
+                ResMap.Clear();
+                var lst = new List<Transform>();
+                foreach (Transform child in Content)
+                {
+                    lst.Add(child);
+                }
+                for (int i = 0; i < lst.Count; i++)
+                {
+                    Destroy(lst[i].gameObject);
+
+                }
+                DirTools.DeleteFolder(DirTools.GetTmpResDir());
             });
         }
 
@@ -180,6 +207,14 @@ namespace QFramework.Example
             }
         }
 
+        public void GenerateCode()
+        {
+            var fileName = "PackageResParser.lua";
+            var luaFilePath = Application.streamingAssetsPath + "/" + fileName;
+            var destFile = System.IO.Path.Combine(DirTools.GetOutPutDir(), fileName);
+            System.IO.File.Copy(luaFilePath, destFile, true);
+        }
+
         public void ExportRes()
         {
             Debug.Log("导出资源");
@@ -204,7 +239,7 @@ namespace QFramework.Example
             File.WriteAllText(DirTools.GetTmpOutPutDir() + "/ResConfig.json", dataAsJson);
             TexturePackage();
             Compress();
-            GenerateCode.ImageConfig(TotalProperties);
+            GenerateCode();
             System.Diagnostics.Process.Start(DirTools.GetBasePathDir());
         }
 
@@ -227,9 +262,10 @@ namespace QFramework.Example
                 else
                 {
                     var text = webRequest.downloadHandler.text;
+                    Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
                     var template = QF.SerializeHelper.FromJson<ActivityConfig>(text).Config;
                     template = template != null ? template : new Dictionary<string, string>();
-                    Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
+                    
                     TypeEventSystem.Register<FilePathInfo>((file)=>
                     {
                         if (ResMap.ContainsKey(file.MD5))
@@ -258,6 +294,12 @@ namespace QFramework.Example
 #endif
                 }
             }
+        }
+
+
+        public void setBlockProperties(string md5, Dictionary<string, string> properties)
+        {
+
         }
 
 

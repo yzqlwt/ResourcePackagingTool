@@ -88,7 +88,7 @@ namespace QFramework.Example
                 WWWForm form = new WWWForm();
                 form.AddField("config", config);
                 form.AddField("desc", desc);
-                form.AddField("activityIndex", activityIndex);
+                form.AddField("activityIndex", "G"+activityIndex);
                 form.AddField("type", PanelType);
                 var url = string.Format("{0}activity/upload", CommonConfig.ServerUrl);
                 WWW getData = new WWW(url, form);
