@@ -25,12 +25,13 @@ namespace QFramework.Example
     public class UIResourcePanelData : QFramework.UIPanelData
     {
         public string activityIndex;
+        public string id;
     }
     
     public partial class UIResourcePanel : QFramework.UIPanel
     {
 
-        private string Version = "v1.0.0";
+        private string Version = "v1.0.1";
         public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>(); //MD5-ResBlockPrefab
 
         public Transform ResBlockPrefab;
@@ -71,12 +72,12 @@ namespace QFramework.Example
             mData = uiData as UIResourcePanelData ?? new UIResourcePanelData();
             // please add init code here
             var activity = mData.activityIndex;
+            var id = mData.id;
             TextLabel.text = "ResArea-" + activity;
             DirTools.Version = Version;
             gameObject.AddComponent<FileDragAndDrop>();
             DirTools.ActivityIndex = activity;
             DirTools.Version = Version;
-            StartCoroutine(GetConfigTemplate(activity));
             TypeEventSystem.Register<ResBlockNameChanged>(NameChanged);
             Export.onClick.AddListener(ExportRes);
             Clear.onClick.AddListener(ClearRes);
@@ -84,7 +85,8 @@ namespace QFramework.Example
             {
                 UIMgr.OpenPanel("UIUploadPanel", UILevel.Common, new UIUploadPanelData()
                 {
-                    ActivityIndex = activity
+                    ActivityIndex = activity,
+                    id = id
                 }) ;    
             });
             TypeEventSystem.Register<RemoveBlock>((tmp)=> {
@@ -122,7 +124,32 @@ namespace QFramework.Example
                 }
                 DirTools.DeleteFolder(DirTools.GetTmpResDir());
             });
+
+            TypeEventSystem.Register<FilePathInfo>((file) =>
+            {
+                if (ResMap.ContainsKey(file.MD5))
+                {
+                    return;
+                }
+                else if (file.Extension == ".zip")
+                {
+                    MessageBoxV2.AddMessage("暂不支持拖入zip", 3);
+                }
+                else
+                {
+                    var BlockImage = Instantiate(ResBlockPrefab, Content);
+                    BlockImage.GetComponent<ResBlockScript>().SetImage(file);
+                    DirTools.CopyDropFileToTmpResDir(file);
+                    ResMap.Add(file.MD5, BlockImage);
+                }
+            });
+            DirTools.CleanUpDir();
+            ResMap.Clear();
+#if UNITY_EDITOR
+            Invoke("Test", 3.0f);
+#endif
         }
+
 
         public void NameChanged(ResBlockNameChanged nameChanged)
         {
@@ -245,55 +272,6 @@ namespace QFramework.Example
 
         protected override void OnClose()
         {
-        }
-
-        IEnumerator GetConfigTemplate(string activity)
-        {
-            var uri = string.Format("{0}activity/config?activity=" + activity, CommonConfig.ServerUrl);
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-            {
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.isNetworkError)
-                {
-                    Debug.Log(": Error: " + webRequest.error);
-                }
-                else
-                {
-                    var text = webRequest.downloadHandler.text;
-                    Debug.Log(string.Format("互动资源默认属性配置:{0}", text));
-                    var template = QF.SerializeHelper.FromJson<ActivityConfig>(text).Config;
-                    template = template != null ? template : new Dictionary<string, string>();
-                    
-                    TypeEventSystem.Register<FilePathInfo>((file)=>
-                    {
-                        if (ResMap.ContainsKey(file.MD5))
-                        {
-                            return;
-                        }
-                        else if (file.Extension == ".zip")
-                        {
-                            MessageBoxV2.AddMessage("重现配置暂未完成", 3);
-                        }
-                        else
-                        {
-                            var str = string.Format("Drag File：{0}", file.FileName);
-                            MessageBoxV2.AddMessage(str, 3);
-                            var BlockImage = Instantiate(ResBlockPrefab, Content);
-                            BlockImage.GetComponent<ResBlockScript>().SetTemplate(template);
-                            BlockImage.GetComponent<ResBlockScript>().SetImage(file);
-                            DirTools.CopyDropFileToTmpResDir(file);
-                            ResMap.Add(file.MD5, BlockImage);
-                        }
-                    });
-                    DirTools.CleanUpDir();
-                    ResMap.Clear();
-#if UNITY_EDITOR
-                    Invoke("Test", 3.0f);
-#endif
-                }
-            }
         }
 
 

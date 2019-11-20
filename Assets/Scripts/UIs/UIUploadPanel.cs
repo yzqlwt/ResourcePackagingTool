@@ -36,6 +36,7 @@ namespace QFramework.Example
     public class UIUploadPanelData : QFramework.UIPanelData
     {
         public string ActivityIndex;
+        public string id;
     }
     
     public partial class UIUploadPanel : QFramework.UIPanel
@@ -43,6 +44,8 @@ namespace QFramework.Example
 
         private string Auth = "****";
         private string ActivityIndex = "**";
+
+        private string ItemId;
 
         public GameObject AttachmentPrefab;
         public Transform Content;
@@ -73,8 +76,8 @@ namespace QFramework.Example
                 var str = ItemIdDropdown.GetComponent<Dropdown>().captionText.text;
                 if (str.IndexOf("SkinName") > -1)
                 {
-                    var item_id = str.Split('|')[1].Split(':')[1];
-                    StartCoroutine(GetAttachments("Skin", item_id));
+                    ItemId = str.Split('|')[1].Split(':')[1];
+                    StartCoroutine(GetAttachments("Skin", ItemId));
                 }
 
             });
@@ -82,33 +85,9 @@ namespace QFramework.Example
             {
                 UIMgr.ClosePanel("UIUploadPanel");
             });
-            StartCoroutine(GetAuth());
-            ActivityText.text = ActivityIndex;
-        }
-
-
-
-        IEnumerator GetAuth()
-        {
-            //var url = string.Format("http://www.yzqlwt.com:8080/activity/auth");
-            //UnityWebRequest webRequest = UnityWebRequest.Get(url);
-            //yield return webRequest.SendWebRequest();
-
-            //if (webRequest.isNetworkError)
-            //{
-            //    Debug.Log(": Error: " + webRequest.error);
-            //}
-            //else
-            //{
-            //    Debug.Log(webRequest.downloadHandler.text);
-            //    var encrypt_str = webRequest.downloadHandler.text;
-            //    string keys = "z!FZXp^ahDv4J#sz";
-            //    Auth = Assets.Scripts.Utils.AES.Decode(encrypt_str, keys);
-            //    StartCoroutine(GetTemplateId());
-            //}
             Auth = PlayerPrefs.GetString("access_token");
-            yield return null;
-            StartCoroutine(GetTemplateId());
+            StartCoroutine(GetItemId(int.Parse(mData.id)));
+            ActivityText.text = ActivityIndex;
         }
 
         IEnumerator GetAttachments(string itemType, string itemId)
@@ -167,8 +146,9 @@ namespace QFramework.Example
             var btn_download = obj.transform.Find("Download").GetComponent<Button>();
             btn_download.onClick.AddListener(() =>
             {
-                var url = string.Format("http://gate-static.97kid.com/{0}", config.attachments.uri);
-                Application.OpenURL(url);
+                //var url = string.Format("http://gate-static.97kid.com/{0}", config.attachments.uri);
+                //Application.OpenURL(url);
+                StartCoroutine(GetArgu("Skin", ItemId));
             });
 
             var btn_restore = obj.transform.Find("Restore").GetComponent<Button>();
@@ -178,48 +158,7 @@ namespace QFramework.Example
             });
         }
 
-        IEnumerator GetTemplateId()
-        {
-            var url = string.Format("https://gate.mongomath.com:8443/admin-course/activityTemplates?count={0}", 70);
-            UnityWebRequest webRequest = UnityWebRequest.Get(url);
-            webRequest.SetRequestHeader("Authorization", Auth);
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-            yield return webRequest.SendWebRequest();
-            if (webRequest.isNetworkError)
-            {
-                Debug.Log(": Error: " + webRequest.error);
-            }
-            else
-            {
-                Debug.Log(webRequest.downloadHandler.text);
-                var res = webRequest.downloadHandler.text;
-                if (res.IndexOf("invalid.request")>-1)
-                {
-                    MessageBoxV2.AddMessage("Token失效，请重新登录！！！");
-                    yield return 0;
-                }
-                else
-                {
-                    var templatesConfig = QF.SerializeHelper.FromJson<Assets.Scripts.Upload.TemplatesConfig>(webRequest.downloadHandler.text);
-                    var list = templatesConfig.targets;
-                    var t = list.Where((data) =>
-                    {
-                        Debug.Log(data.game_id + ActivityIndex);
-                        return data.game_id == ActivityIndex;
-                    }).ToList();
-                    if (t.Count() != 1)
-                    {
-                        Debug.LogError("��Templates��δ�ҵ�ѡ�еĻ���������");
-                    }
-                    else
-                    {
-                        var template_id = t.First().id;
-                        StartCoroutine(GetItemId(template_id));
-                    }
-                }
 
-            }
-        }
 
         IEnumerator GetItemId(int template_id)
         {
@@ -284,6 +223,128 @@ namespace QFramework.Example
                 
             }
         }
+
+        public Dictionary<string, string> GetDescription()
+        {
+            var description_dict = new Dictionary<string, string>();
+            var dict = getResConfig(DirTools.GetTmpOutPutDir());
+            foreach (KeyValuePair<string, Dictionary<string, string>> kv in dict)
+            {
+                var properties = kv.Value;
+                string description;
+                properties.TryGetValue("Description", out description);
+                if(description == null || description == "")
+                {
+                    Debug.Log("properties:"+properties["Name"]);
+                }
+                else
+                {
+                    description_dict.Add(kv.Key, description);
+                }
+            }
+            Debug.Log(description_dict.ToString());
+            return description_dict;
+        }
+
+        IEnumerator GetArgu(string itemType, string itemId)
+        {
+            
+            var exsitArgu = new Dictionary<string, string>();
+            var url = string.Format("https://gate.mongomath.com:8443/admin-course/properties?itemType={0}&itemId={1}", itemType, itemId);
+            UnityWebRequest webRequest = UnityWebRequest.Get(url);
+            webRequest.SetRequestHeader("Authorization", Auth);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.LogWarning(webRequest.downloadHandler.text);
+                var description_dict = GetDescription();
+                var list = QF.SerializeHelper.FromJson<List<PropertiesConfig>>(webRequest.downloadHandler.text);
+
+
+                foreach (KeyValuePair<string, string> kv in description_dict)
+                {
+                    Debug.Log(string.Format("key:{0}-value{1}", kv.Key, kv.Value));
+                    var ret = list.Find((tmp) =>
+                    {
+                        return kv.Key == tmp.name;
+                    });
+                    if (ret != null)
+                    {
+                        if (ret.content == kv.Value)
+                        {
+                            Debug.Log("一致的内容不更新" + kv.Key);
+                        }
+                        else
+                        {
+                            Debug.Log("更新" + kv.Key+"id"+ ret.id);
+                            StartCoroutine(UpdateArgu(itemType, itemId, kv.Key, kv.Value, ret.id + ""));
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(UploadArgu(itemType, itemId, kv.Key, kv.Value));
+                    }
+                }
+            }
+        }
+
+
+
+        IEnumerator UploadArgu(string itemType, string itemId, string name, string content)
+        {
+            var url = string.Format("https://gate.mongomath.com:8443/admin-course/properties");
+            WWWForm form = new WWWForm();
+            form.AddField("itemType", itemType);
+            form.AddField("itemId", itemId);
+            form.AddField("name", name);
+            form.AddField("content", content);
+            UnityWebRequest webRequest = UnityWebRequest.Post(url, form);
+            webRequest.SetRequestHeader("Authorization", Auth);
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.LogWarning(webRequest.downloadHandler.text);
+                MessageBoxV2.AddMessage("上传字段" + name);
+            }
+        }
+
+        IEnumerator UpdateArgu(string itemType, string itemId, string name, string content, string id)
+        {
+            Debug.Log("UpdateArgu");
+            var dict = new Dictionary<string, string>();
+            dict["id"] = id;
+            dict["itemType"] = itemType;
+            dict["itemId"] = itemId;
+            dict["name"] = name;
+            dict["content"] = content;
+            var argu = QF.SerializeHelper.ToJson<Dictionary<string, string>>(dict);
+            var webRequest = UnityWebRequest.Put("https://gate.mongomath.com:8443/admin-course/properties/" + id, argu);
+            webRequest.SetRequestHeader("Authorization", Auth);
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+            yield return webRequest.SendWebRequest();
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(webRequest.downloadHandler.text);
+                MessageBoxV2.AddMessage("更新字段" + name);
+            }
+        }
+
+
         IEnumerator Unpacker(string plistFilePath, string pngFilePath)
         {
             DirTools.DeleteFolder(DirTools.GetRestoredPNGDir());
@@ -325,34 +386,23 @@ namespace QFramework.Example
             yield return null;
         }
 
-        public void ImportToResPanel()
+        public Dictionary<string, Dictionary<string, string>> getResConfig(string path)
         {
-            //清除资源文件夹
-            //清除rescoure面板
-            //DirectoryInfo dir = new DirectoryInfo(DirTools.GetRestoredPNGDir());
-            //FileInfo[] finfo = dir.GetFiles();
-
-            //for (int i = 0; i < finfo.Length; i++)
-            //{
-            //    var file = finfo[i];
-            //    var fileinfo = new FilePathInfo()
-            //    {
-            //        FilePath = file.FullName,
-            //        FileName = file.Name,
-            //        Extension = System.IO.Path.GetExtension(file.Name),
-            //        MD5 = System.IO.Path.GetFileNameWithoutExtension(file.Name)
-
-            //    };
-            //    DirTools.CopyDropFileToTmpResDir(fileinfo);
-            //}
-            TypeEventSystem.Send(new ClearRescoursePanel());
-            StreamReader sr = new StreamReader(DirTools.GetRestoredPNGDir() + "/ResConfig.json");
+            StreamReader sr = new StreamReader(path + "/ResConfig.json");
             if (sr == null)
             {
-                return;
+                return null;
             }
             string json = sr.ReadToEnd();
+            sr.Close();
             var dict = QF.SerializeHelper.FromJson<Dictionary<string, Dictionary<string, string>>>(json);
+            return dict;
+        }
+
+        public void ImportToResPanel()
+        {
+            TypeEventSystem.Send(new ClearRescoursePanel());
+            var dict = getResConfig(DirTools.GetRestoredPNGDir());
             foreach (KeyValuePair<string, Dictionary<string, string>> kv in dict)
             {
                 var properties = kv.Value;
@@ -373,6 +423,7 @@ namespace QFramework.Example
                     properties = properties
                 });
             }
+            UIMgr.ClosePanel("UIUploadPanel");
 
         }
 
@@ -381,27 +432,36 @@ namespace QFramework.Example
 
 
             var filePath = DirTools.GetOutPutDir() + "/ResConfig.zip";
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            byte[] bytes = new byte[fs.Length];
-            fs.Read(bytes, 0, (int)fs.Length);
-            WWWForm form = new WWWForm();
-            form.AddBinaryData("file", bytes, "ResConfig.zip");
-            var webRequest = UnityWebRequest.Post("https://gate.mongomath.com:8443/admin-course/asset/uploadSingle", form);
-            webRequest.SetRequestHeader("Authorization", Auth);
-            //webRequest.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            yield return webRequest.SendWebRequest();
-            if (webRequest.isNetworkError)
+            if (!File.Exists(filePath))
             {
-                Debug.Log(": Error: " + webRequest.error);
+                MessageBoxV2.AddMessage("请先导出资源！");
+                yield return null;
             }
             else
             {
-                Debug.Log(webRequest.downloadHandler.text);
-                var dict = QF.SerializeHelper.FromJson<Dictionary<string, string>>(webRequest.downloadHandler.text);
-                var attachment_id = dict["id"];
-                Debug.Log("上传成功" + attachment_id);
-                StartCoroutine(UpdateAttachment(config, attachment_id));
+                FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                byte[] bytes = new byte[fs.Length];
+                fs.Read(bytes, 0, (int)fs.Length);
+                WWWForm form = new WWWForm();
+                form.AddBinaryData("file", bytes, "ResConfig.zip");
+                var webRequest = UnityWebRequest.Post("https://gate.mongomath.com:8443/admin-course/asset/uploadSingle", form);
+                webRequest.SetRequestHeader("Authorization", Auth);
+                //webRequest.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                yield return webRequest.SendWebRequest();
+                if (webRequest.isNetworkError)
+                {
+                    Debug.Log(": Error: " + webRequest.error);
+                }
+                else
+                {
+                    Debug.Log(webRequest.downloadHandler.text);
+                    var dict = QF.SerializeHelper.FromJson<Dictionary<string, string>>(webRequest.downloadHandler.text);
+                    var attachment_id = dict["id"];
+                    Debug.Log("上传成功" + attachment_id);
+                    StartCoroutine(UpdateAttachment(config, attachment_id));
+                }
             }
+
         }
 
         IEnumerator UpdateAttachment(AttachmentsConfig config, string attachment_id)
@@ -429,6 +489,7 @@ namespace QFramework.Example
                 if (isSuccess)
                 {
                     MessageBoxV2.AddMessage("更新资源成功",4);
+                    StartCoroutine(GetArgu("Skin", config.itemId));
                 }
             }
         }

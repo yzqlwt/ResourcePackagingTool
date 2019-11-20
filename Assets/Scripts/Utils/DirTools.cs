@@ -19,10 +19,6 @@ class DirTools
     {
         var desktoppath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + "/";
         var path = desktoppath + "/工具" + Version + "/" + ActivityIndex;
-        if (ActivityIndex.IndexOf("G") < 0)
-        {
-            MessageBoxV2.AddMessage("ActivityIndex is null");
-        }
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
         return path;

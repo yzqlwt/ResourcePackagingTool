@@ -55,6 +55,7 @@ namespace QuickTools
                 UnityEngine.Debug.Log(output);
                 MessageBoxV2.AddMessage(output, 10);
                 process.WaitForExit();
+                reader.Close();
             }
         }
         public static void DeleteFolder(string directoryPath)

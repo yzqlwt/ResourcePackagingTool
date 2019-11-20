@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MyGod
+  m_Text: Backend
 --- !u!1 &1557652148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,7 +2778,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSubPanelInfos: []
-  Version: v0.0.1
   ResBlockPrefab: {fileID: 4309477889487366333, guid: 39d8e969f91851d4b988c247e5ceaab3,
     type: 3}
   Content: {fileID: 8272431632826784790}

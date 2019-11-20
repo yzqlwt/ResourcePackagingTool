@@ -10,6 +10,7 @@
 
 namespace QFramework.Example
 {
+    using Newtonsoft.Json;
     using QF.Master;
     using QuickTools;
     using System;
@@ -21,8 +22,12 @@ namespace QFramework.Example
     using UnityEngine.UI;
 
 
-    
-    
+    public class ActivityData
+    {
+        public int id;
+        public string name;
+    }
+
     public class UIActivityPanelData : QFramework.UIPanelData
     {
     }
@@ -40,59 +45,17 @@ namespace QFramework.Example
         {
             mData = uiData as UIActivityPanelData ?? new UIActivityPanelData();
             // please add init code here
-            AddActivity.onClick.AddListener(AddActivityClick);
-            ModifyActivity.onClick.AddListener(ModifyActivityClick);
             Guide.onClick.AddListener(GuideToTexturePackage);
-            Refresh.onClick.AddListener(RefreshList);
             Start.onClick.AddListener(StartClick);
-            Update.onClick.AddListener(DownloadNewVersion);
             ActivityOptions.GetComponent<Dropdown>().onValueChanged.AddListener(ActivityOptionChanged);
-            StartCoroutine(GetActivityList());
-            var machineCode = QuickTools.Utils.GetPcInfo();
-            MachineCode.text = "设备码:" + machineCode;
-            Debug.Log(machineCode);
-            ImagePanel.gameObject.SetActive(false);
-            StartCoroutine(GetMachines(machineCode));
-            CopyMachineCode.onClick.AddListener(() =>
-            {
-                UnityEngine.GUIUtility.systemCopyBuffer = machineCode;
-                MessageBoxV2.AddMessage("复制到剪切板成功！！！");
-            });
-
+            StartCoroutine(GetActivityList(1));
+            ActivityOptions.GetComponent<Dropdown>().ClearOptions();
+            ActivityOptions.GetComponent<Dropdown>().AddOptions(new List<string>
+                    {
+                        "请先选择互动"
+                    });
         }
 
-        IEnumerator GetMachines(string machineCode)
-        {
-            var uri = "http://www.yzqlwt.com:8080/activity/machines";
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-            {
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.isNetworkError)
-                {
-                    Debug.Log(": Error: " + webRequest.error);
-                }
-                else
-                {
-
-                    var machines = QF.SerializeHelper.FromJson<Dictionary<string, string>>(webRequest.downloadHandler.text);
-                    if (machines.ContainsKey(machineCode))
-                    {
-                        MachineCode.text = "设备码:" + machineCode + " 已激活";
-                        ImagePanel.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        MachineCode.text = "设备码:" + machineCode + " 未激活";
-
-                    }
-
-
-                }
-
-            }
-        }
 
 
 
@@ -112,45 +75,25 @@ namespace QFramework.Example
         {
         }
 
-        private void ModifyActivityClick()
-        {
-            var text = ActivityOptions.GetComponent<Dropdown>().captionText.text;
-            if (text.IndexOf("G") > -1)
-            {
-                UIMgr.OpenPanel("UIAddActivityPanel", UILevel.Common, new UIAddActivityPanelData()
-                {
-                    type = "Modify",
-                    activityIndex = text
-                });
-                UIMgr.ClosePanel("UIActivityPanel");
-            }
-            else
-            {
-                MessageBoxV2.AddMessage("先选择互动");
-            }
 
-        }
-
-        private void AddActivityClick()
-        {
-            UIMgr.OpenPanel("UIAddActivityPanel", UILevel.Common, new UIAddActivityPanelData()
-            {
-                type = "Add",
-                activityIndex = ""
-            });
-            UIMgr.ClosePanel("UIActivityPanel");
-        }
         private void StartClick()
         {
             
             var text = ActivityOptions.GetComponent<Dropdown>().captionText.text;
-            if (text.IndexOf("G") > -1)
+            if (text.IndexOf("-") > -1)
             {
-                UIMgr.OpenPanel("UIResourcePanel", UILevel.Common, new UIResourcePanelData()
-                {
-                    activityIndex = text
-                });
-                UIMgr.ClosePanel("UIActivityPanel");
+                var id = text.Split(':')[1];
+                var index = text.Split(' ')[0];
+                int tmp = 0;
+                if (int.TryParse(id, out tmp)) {
+                    UIMgr.OpenPanel("UIResourcePanel", UILevel.Common, new UIResourcePanelData()
+                    {
+                        activityIndex = index,
+                        id = id
+                    });
+                    UIMgr.ClosePanel("UIActivityPanel");
+                }
+
             }
             
         }
@@ -173,14 +116,18 @@ namespace QFramework.Example
         }
         private void RefreshList()
         {
-            StartCoroutine(GetActivityList());
+            StartCoroutine(GetActivityList(1));
         }
 
-        IEnumerator GetActivityList()
+        IEnumerator GetActivityList(int pageNumber = 1)
         {
-            var uri = "http://www.yzqlwt.com:8080/activity/list";
+            var start = 12 * (pageNumber - 1);
+            var uri = "https://gate.mongomath.com:8443/admin-course/activityTemplates?count=20&start=" + start;
+            var Auth = PlayerPrefs.GetString("access_token");
             using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
             {
+                webRequest.SetRequestHeader("Authorization", Auth);
+                webRequest.SetRequestHeader("Content-Type", "application/json");
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
 
@@ -190,20 +137,25 @@ namespace QFramework.Example
                 }
                 else
                 {
-
-                    var list = QF.SerializeHelper.FromJson<Dictionary<string, string>>(webRequest.downloadHandler.text);
-                    ActivityOptions.GetComponent<Dropdown>().ClearOptions();
-                    ActivityOptions.GetComponent<Dropdown>().AddOptions(new List<string>
-                {
-                    "请先选择互动"
-                });
-
-                    var Activities = list.Select((kv) =>
+                    //{
+                    //  "id": 92,
+                    //  "name": "83-规律连线",
+                    //  "description": null,
+                    //  "game_id": "g83",
+                    //  "remark": null,
+                    //  "notice": null,
+                    //  "phonics_description": null
+                    //}
+                    dynamic jResults = JsonConvert.DeserializeObject(webRequest.downloadHandler.text);
+                    List<string> activities = new List<string>();
+                    foreach (var activity in jResults.targets)
                     {
-                        return kv.Key;
-                    }).ToList();
-                    ActivityOptions.GetComponent<Dropdown>().AddOptions(Activities);
-                    Debug.Log(string.Format("Activity List:{0}", webRequest.downloadHandler.text));
+                        var name = (string)activity.name;
+                        var id = (string)activity.id;
+                        activities.Add(name+" id:"+ id);
+                    }
+
+                    ActivityOptions.GetComponent<Dropdown>().AddOptions(activities);
                 }
             }
         }

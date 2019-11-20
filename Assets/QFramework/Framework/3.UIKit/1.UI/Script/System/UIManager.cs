@@ -437,21 +437,21 @@ namespace QFramework
 			return UIManager.Instance.GetUI(panelName);
 		}
 
-		public static UIPanel OpenPanel(string panelName, UILevel level = UILevel.Common, string assetBundleName = null)
-		{
-			return UIManager.Instance.OpenUI(panelName, level, null, assetBundleName) as UIPanel;
-		}
+		//public static UIPanel OpenPanel(string panelName, UILevel level = UILevel.Common, string assetBundleName = null)
+		//{
+		//	return UIManager.Instance.OpenUI(panelName, level, null, assetBundleName) as UIPanel;
+		//}
+        public static UIPanel OpenPanel(string panelName, UILevel level = UILevel.Common, IUIData data = null)
+        {
+            return UIManager.Instance.OpenUI(panelName, level, data, null) as UIPanel;
+        }
 
-		public static UIPanel OpenPanel(string panelName, UILevel common)
+        public static UIPanel OpenPanel(string panelName)
 		{
 			return UIManager.Instance.OpenUI(panelName, UILevel.Common, null, null) as UIPanel;
 		}
-        public static UIPanel OpenPanel(string panelName, UILevel common, UIPanelData data)
-        {
-            return UIManager.Instance.OpenUI(panelName, UILevel.Common, data, null) as UIPanel;
-        }
-
-        public static void ClosePanel(string panelName)
+		
+		public static void ClosePanel(string panelName)
 		{
 			UIManager.Instance.CloseUI(panelName);
 		}

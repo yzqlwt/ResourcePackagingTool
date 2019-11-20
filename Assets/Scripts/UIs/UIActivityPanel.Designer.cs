@@ -27,31 +27,16 @@ namespace QFramework.Example
         public UnityEngine.UI.Image ImagePanel;
         
         [SerializeField()]
-        public UnityEngine.UI.Image ActivityOptions;
+        public UnityEngine.UI.Dropdown ActivityOptions;
         
         [SerializeField()]
         public UnityEngine.UI.Button Update;
-        
-        [SerializeField()]
-        public UnityEngine.UI.Button Refresh;
-        
-        [SerializeField()]
-        public UnityEngine.UI.Button AddActivity;
-        
-        [SerializeField()]
-        public UnityEngine.UI.Button ModifyActivity;
         
         [SerializeField()]
         public UnityEngine.UI.Button Guide;
         
         [SerializeField()]
         public UnityEngine.UI.Button Start;
-        
-        [SerializeField()]
-        public UnityEngine.UI.Text MachineCode;
-        
-        [SerializeField()]
-        public UnityEngine.UI.Button CopyMachineCode;
         
         private UIActivityPanelData mPrivateData = null;
         
@@ -73,13 +58,8 @@ namespace QFramework.Example
             ImagePanel = null;
             ActivityOptions = null;
             Update = null;
-            Refresh = null;
-            AddActivity = null;
-            ModifyActivity = null;
             Guide = null;
             Start = null;
-            MachineCode = null;
-            CopyMachineCode = null;
             mData = null;
         }
     }

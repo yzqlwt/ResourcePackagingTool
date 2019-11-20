@@ -62,6 +62,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Battlehub\UIControls\Demo\Scripts\ExternalDragItem.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Demo\Scripts\Rotation.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Demo\Scripts\TreeViewDemo.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\ItemContainer.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\ItemDropMarker.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\ItemsControl.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\ListBox.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\ListBoxItem.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\PopupWindow.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\RectTransformChangeListener.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\TreeView.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\TreeViewDropMarker.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\TreeViewExpander.cs" />
+    <Compile Include="Assets\Battlehub\UIControls\Scripts\TreeViewItem.cs" />
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\Plugins\Unidux\Examples\List\Scripts\ListItemDispatcher.cs" />
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\Plugins\Unidux\Examples\List\Scripts\ListReducer.cs" />
     <Compile Include="Assets\QFramework\Framework\0.PackageKit\Plugins\Unidux\Examples\List\Scripts\ListRenderer.cs" />
@@ -284,6 +298,7 @@
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\Lzw\LzwConstants.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\Lzw\LzwException.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\Lzw\LzwInputStream.cs" />
+    <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\obj\Debug\netstandard1.3\ICSharpCode.SharpZipLib.AssemblyInfo.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\SharpZipBaseException.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\Tar\InvalidHeaderException.cs" />
     <Compile Include="Assets\QFramework\Framework\Plugins\ICSharpCode.SharpZipLib\Tar\TarArchive.cs" />
@@ -333,8 +348,6 @@
     <Compile Include="Assets\Scripts\ResBlockScript.cs" />
     <Compile Include="Assets\Scripts\UIs\UIActivityPanel.cs" />
     <Compile Include="Assets\Scripts\UIs\UIActivityPanel.Designer.cs" />
-    <Compile Include="Assets\Scripts\UIs\UIAddActivityPanel.cs" />
-    <Compile Include="Assets\Scripts\UIs\UIAddActivityPanel.Designer.cs" />
     <Compile Include="Assets\Scripts\UIs\UILoginPanel.cs" />
     <Compile Include="Assets\Scripts\UIs\UILoginPanel.Designer.cs" />
     <Compile Include="Assets\Scripts\UIs\UIPropertiesPanel.cs" />
@@ -351,6 +364,7 @@
     <Compile Include="Assets\Scripts\UnPacker\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\UnPacker\PlistParser.cs" />
     <Compile Include="Assets\Scripts\Upload\AttachmentsConfig.cs" />
+    <Compile Include="Assets\Scripts\Upload\PropertiesConfig.cs" />
     <Compile Include="Assets\Scripts\Upload\SkinsConfig.cs" />
     <Compile Include="Assets\Scripts\Upload\TemplatesConfig.cs" />
     <Compile Include="Assets\Scripts\Utils\AES.cs" />

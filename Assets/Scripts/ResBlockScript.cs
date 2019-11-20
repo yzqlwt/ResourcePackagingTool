@@ -38,7 +38,6 @@ public class ResBlockScript : MonoBehaviour, IPointerClickHandler
     }
     public Dictionary<string, string> Properties { get; set; }
     private FilePathInfo file;
-    private Dictionary<string, string> Template;
     void Start()
     {
         Md5 = "未设置";
@@ -51,21 +50,15 @@ public class ResBlockScript : MonoBehaviour, IPointerClickHandler
         var toggleGroup = transform.parent.GetComponent<ToggleGroup>();
         toggle.group = toggleGroup;
         var property = new Dictionary<string, string>();
-        foreach(var kv in Template)
-        {
-            property.Add(kv.Key, kv.Value);
-        }
         property["Name"] = file.FileName.Replace(file.Extension, "");
         property["MD5"] = file.MD5;
         property["Extension"] = file.Extension;
+        property["Description"] = "";
         Properties = property;
         StartCoroutine(GetImage(file));
     }
 
-    public void SetTemplate(Dictionary<string, string> template)
-    {
-        Template = template;
-    }
+ 
 
 
     IEnumerator GetImage(FilePathInfo file)
