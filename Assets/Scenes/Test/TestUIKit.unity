@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIActivityPanel:
-    PanelName: UIActivityPanel
+    PanelName: UILoginPanel
     Level: 0
 --- !u!4 &1431033212
 Transform:

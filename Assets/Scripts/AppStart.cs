@@ -28,6 +28,7 @@ using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class UIPanelTesterInfo
@@ -56,8 +57,23 @@ public class AppStart : MonoBehaviour
     private IEnumerator Start()
     {
         
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
+        //PlayerPrefs.SetString("Version", Version);
+        //UIMgr.OpenPanel(UIActivityPanel.PanelName, UIActivityPanel.Level);
 
-        UIMgr.OpenPanel(UIActivityPanel.PanelName, UIActivityPanel.Level);
+        var url = string.Format("https://raw.githubusercontent.com/yzqlwt/ResourcePackagingTool/master/version");
+        UnityWebRequest webRequest = UnityWebRequest.Get(url);
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.isNetworkError || webRequest.responseCode == 404)
+        {
+            Debug.Log(": Error: " + webRequest.error);
+        }
+        else
+        {
+            Debug.Log(webRequest.downloadHandler.text);
+            PlayerPrefs.SetString("Version", webRequest.downloadHandler.text);
+            UIMgr.OpenPanel(UIActivityPanel.PanelName, UIActivityPanel.Level);
+        }
     }
 }

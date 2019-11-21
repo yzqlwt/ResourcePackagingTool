@@ -31,7 +31,6 @@ namespace QFramework.Example
     public partial class UIResourcePanel : QFramework.UIPanel
     {
 
-        private string Version = "v1.0.1";
         public Dictionary<string, Transform> ResMap = new Dictionary<string, Transform>(); //MD5-ResBlockPrefab
 
         public Transform ResBlockPrefab;
@@ -74,10 +73,10 @@ namespace QFramework.Example
             var activity = mData.activityIndex;
             var id = mData.id;
             TextLabel.text = "ResArea-" + activity;
-            DirTools.Version = Version;
+            var version = PlayerPrefs.GetString("Version");
             gameObject.AddComponent<FileDragAndDrop>();
             DirTools.ActivityIndex = activity;
-            DirTools.Version = Version;
+            DirTools.Version = version;
             TypeEventSystem.Register<ResBlockNameChanged>(NameChanged);
             Export.onClick.AddListener(ExportRes);
             Clear.onClick.AddListener(ClearRes);
